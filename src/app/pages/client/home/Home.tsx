@@ -48,6 +48,7 @@ import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import { VirtualTile } from '../../../components/virtualizer';
 import { RoomNavCategoryButton, RoomNavItem } from '../../../features/room-nav';
 import { makeNavCategoryId } from '../../../state/closedNavCategories';
+import { useClientConfig } from '../../../hooks/useClientConfig';
 import { roomToUnreadAtom } from '../../../state/room/roomToUnread';
 import { useCategoryHandler } from '../../../hooks/useCategoryHandler';
 import { useNavToActivePathMapper } from '../../../hooks/useNavToActivePathMapper';
@@ -154,6 +155,8 @@ function HomeHeader() {
 
 function HomeEmpty() {
   const navigate = useNavigate();
+  const clientConfig = useClientConfig();
+  const features = clientConfig.features ?? {};
 
   return (
     <NavEmptyCenter>
@@ -176,6 +179,7 @@ function HomeEmpty() {
                 Create Room
               </Text>
             </Button>
+            {features.exploreCommunity !== false && (
             <Button
               onClick={() => navigate(getExplorePath())}
               variant="Secondary"
@@ -186,6 +190,7 @@ function HomeEmpty() {
                 Explore Community Rooms
               </Text>
             </Button>
+            )}
           </>
         }
       />
