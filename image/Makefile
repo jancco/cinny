@@ -3,13 +3,15 @@ REGISTRY ?= ccr.ccs.tencentyun.com/jancco
 IMAGE_NAME := cinny
 IMAGE_TAG ?= $(REGISTRY)/$(IMAGE_NAME):latest
 
-# 约定：在 Makefile 所在目录执行 make
-REPO_ROOT := $(abspath $(CURDIR)/../..)
+# Makefile 所在目录 = image/
+IMAGE_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+# 仓库根目录 = image 的上级
+REPO_ROOT := $(abspath $(IMAGE_DIR)/..)
 
 .PHONY: build push
 
 build:
 	cd $(REPO_ROOT) && docker build -f image/Dockerfile -t $(IMAGE_TAG) .
 
-push: build
+push:
 	docker push $(IMAGE_TAG)
