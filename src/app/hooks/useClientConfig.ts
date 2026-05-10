@@ -18,6 +18,13 @@ export type ClientConfig = {
   };
 
   hashRouter?: HashRouterConfig;
+
+  features?: {
+    encryption?: boolean;
+    federation?: boolean;
+    exploreCommunity?: boolean;
+    directMessages?: boolean;
+  };
 };
 
 const ClientConfigContext = createContext<ClientConfig | null>(null);

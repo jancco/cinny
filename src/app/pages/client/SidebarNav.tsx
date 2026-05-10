@@ -18,9 +18,12 @@ import {
   SearchTab,
 } from './sidebar';
 import { CreateTab } from './sidebar/CreateTab';
+import { useClientConfig } from '../../hooks/useClientConfig';
 
 export function SidebarNav() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const clientConfig = useClientConfig();
+  const features = clientConfig.features ?? {};
 
   return (
     <Sidebar>
@@ -29,12 +32,12 @@ export function SidebarNav() {
           <Scroll ref={scrollRef} variant="Background" size="0">
             <SidebarStack>
               <HomeTab />
-              <DirectTab />
+              {features.directMessages !== false && <DirectTab />}
             </SidebarStack>
             <SpaceTabs scrollRef={scrollRef} />
             <SidebarStackSeparator />
             <SidebarStack>
-              <ExploreTab />
+              {features.exploreCommunity !== false && <ExploreTab />}
               <CreateTab />
             </SidebarStack>
           </Scroll>
