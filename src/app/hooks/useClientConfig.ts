@@ -24,6 +24,7 @@ export type ClientConfig = {
     federation?: boolean;
     exploreCommunity?: boolean;
     directMessages?: boolean;
+    roomEncryption?: boolean;
   };
 };
 

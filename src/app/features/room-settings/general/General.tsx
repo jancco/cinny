@@ -15,6 +15,7 @@ import {
 } from '../../common-settings/general';
 import { useRoomCreators } from '../../../hooks/useRoomCreators';
 import { useRoomPermissions } from '../../../hooks/useRoomPermissions';
+import { useClientConfig } from '../../../hooks/useClientConfig';
 
 type GeneralProps = {
   requestClose: () => void;
@@ -24,6 +25,7 @@ export function General({ requestClose }: GeneralProps) {
   const powerLevels = usePowerLevels(room);
   const creators = useRoomCreators(room);
   const permissions = useRoomPermissions(creators, powerLevels);
+  const { features } = useClientConfig();
 
   return (
     <Page>
@@ -50,7 +52,9 @@ export function General({ requestClose }: GeneralProps) {
                 <Text size="L400">Options</Text>
                 <RoomJoinRules permissions={permissions} />
                 <RoomHistoryVisibility permissions={permissions} />
-                <RoomEncryption permissions={permissions} />
+                {features.roomEncryption !== false && (
+                  <RoomEncryption permissions={permissions} />
+                )}
                 <RoomPublish permissions={permissions} />
               </Box>
               <Box direction="Column" gap="100">
