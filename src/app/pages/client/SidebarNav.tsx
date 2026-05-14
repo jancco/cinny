@@ -18,12 +18,10 @@ import {
   SearchTab,
 } from './sidebar';
 import { CreateTab } from './sidebar/CreateTab';
-import { useClientConfig } from '../../hooks/useClientConfig';
+import { FEATURE_DIRECT_MESSAGES, FEATURE_EXPLORE_COMMUNITY } from '../../feature-flags';
 
 export function SidebarNav() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const clientConfig = useClientConfig();
-  const features = clientConfig.features ?? {};
 
   return (
     <Sidebar>
@@ -32,12 +30,12 @@ export function SidebarNav() {
           <Scroll ref={scrollRef} variant="Background" size="0">
             <SidebarStack>
               <HomeTab />
-              {features.directMessages !== false && <DirectTab />}
+              {FEATURE_DIRECT_MESSAGES && <DirectTab />}
             </SidebarStack>
             <SpaceTabs scrollRef={scrollRef} />
             <SidebarStackSeparator />
             <SidebarStack>
-              {features.exploreCommunity !== false && <ExploreTab />}
+              {FEATURE_EXPLORE_COMMUNITY && <ExploreTab />}
               <CreateTab />
             </SidebarStack>
           </Scroll>

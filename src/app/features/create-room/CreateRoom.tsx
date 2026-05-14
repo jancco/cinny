@@ -16,7 +16,7 @@ import {
 } from 'folds';
 import { SettingTile } from '../../components/setting-tile';
 import { SequenceCard } from '../../components/sequence-card';
-import { useClientConfig } from '../../hooks/useClientConfig';
+import { FEATURE_ENCRYPTION, FEATURE_FEDERATION } from '../../feature-flags';
 import {
   creatorsSupported,
   knockRestrictedSupported,
@@ -73,8 +73,6 @@ export function CreateRoomForm({
 }: CreateRoomFormProps) {
   const mx = useMatrixClient();
   const alive = useAlive();
-  const clientConfig = useClientConfig();
-  const features = clientConfig.features ?? {};
 
   const capabilities = useCapabilities();
   const roomVersions = capabilities['m.room_versions'];
@@ -239,7 +237,7 @@ export function CreateRoomForm({
             />
           </SequenceCard>
         )}
-        {features.encryption !== false && access !== CreateRoomAccess.Public && (
+        {FEATURE_ENCRYPTION && access !== CreateRoomAccess.Public && (
           <>
             <SequenceCard
               style={{ padding: config.space.S300 }}
@@ -284,7 +282,7 @@ export function CreateRoomForm({
           </>
         )}
 
-        {features.federation !== false && (
+        {FEATURE_FEDERATION && (
         <SequenceCard
           style={{ padding: config.space.S300 }}
           variant="SurfaceVariant"
